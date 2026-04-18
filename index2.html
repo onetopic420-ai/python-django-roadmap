@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ultimate Python + Django + Database Roadmap 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { 'sans': ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { scroll-behavior: smooth; transition: background 0.3s; }
+    .glass-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); }
+    .dark .glass-card { background: rgba(31,41,55,0.85); }
+    .task-important { color: #dc2626 !important; font-weight: 600; }
+    .dark .task-important { color: #f87171 !important; }
+    .tooltip-icon { cursor: help; margin-left: 4px; font-size: 10px; color: #6b7280; }
+    [data-tooltip] { position: relative; cursor: help; }
+    [data-tooltip]:before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: normal;
+      width: max-content;
+      max-width: 85vw;
+      word-break: break-word;
+      z-index: 20;
+      display: none;
+      pointer-events: none;
+    }
+    [data-tooltip]:hover:before { display: block; }
+    @media (min-width: 640px) {
+      [data-tooltip]:before { max-width: 260px; }
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    .phase-icon { font-size: 1rem; }
+    .action-icon { font-size: 9px; }
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 14px;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .dark .toast-msg { background: #374151; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-sans antialiased min-h-screen">
+
+<div class="max-w-7xl mx-auto px-4 py-6 md:py-10" id="fullRoadmapContainer">
+  <!-- হেডার -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+      <div class="inline-flex items-center gap-2 bg-indigo-700 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-lg">
+        <i class="fas fa-calendar-week text-xs"></i> <span>৯ ফেজের রোডম্যাপ (২০২৬)</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-white mt-3">🚀 Ultimate Python + Django + Database Roadmap</h1>
+      <p class="text-gray-700 dark:text-gray-300 mt-1">গুরুত্বপূর্ণ টপিক <span class="text-red-600 font-bold">লাল রং</span> + বিস্তারিত ব্যাখ্যা (📖 ব্যাখ্যা বাটন)</p>
+    </div>
+    <div class="flex gap-3 flex-wrap">
+      <button id="darkModeToggle" class="px-4 py-2 bg-white/80 dark:bg-gray-800 rounded-xl shadow flex items-center gap-2 text-sm"><i id="darkIcon" class="fas fa-moon text-xs"></i> <span id="darkText">ডার্ক মোড</span></button>
+      <div class="relative group">
+        <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow flex items-center gap-2 text-sm"><i class="fas fa-share-alt text-xs"></i> শেয়ার</button>
+        <div class="absolute right-0 mt-2 w-36 bg-white dark:bg-gray-800 rounded-xl shadow-lg hidden group-hover:block z-20">
+          <button id="sharePNG" class="block w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 rounded-t-xl"><i class="fas fa-image mr-2 text-xs"></i> PNG ইমেজ</button>
+          <button id="sharePDF" class="block w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 rounded-b-xl"><i class="fas fa-file-pdf mr-2 text-xs"></i> PDF</button>
+        </div>
+      </div>
+      <button id="resetAllBtn" class="px-4 py-2 bg-white/80 dark:bg-gray-800 rounded-xl shadow flex items-center gap-2 text-sm"><i class="fas fa-sync-alt text-xs"></i> রিসেট</button>
+    </div>
+  </div>
+
+  <!-- সামগ্রিক অগ্রগতি (মাস্টারি স্ন্যাপশট বাদ দেওয়া হয়েছে) -->
+  <div class="glass-card rounded-2xl shadow-xl p-5 mb-10">
+    <h2 class="font-bold text-gray-700 dark:text-gray-200 text-base"><i class="fas fa-chart-line text-indigo-500 text-sm"></i> সামগ্রিক অগ্রগতি</h2>
+    <div class="text-4xl font-black text-indigo-700 dark:text-indigo-400" id="overallPercentDisplay">0%</div>
+    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mt-2"><div id="overallProgressBar" class="bg-indigo-600 h-3 rounded-full transition-all" style="width:0%"></div></div>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2"><span id="completedTasksCount">0</span> / <span id="totalTasksCount">0</span> টাস্ক শেষ</p>
+  </div>
+
+  <!-- আমার নোট -->
+  <div class="glass-card rounded-2xl shadow-xl p-5 mb-10">
+    <div class="flex justify-between items-center flex-wrap gap-3 border-b border-gray-300 dark:border-gray-600 pb-2 mb-3">
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white"><i class="fas fa-sticky-note text-indigo-500 text-sm"></i> আমার নোট</h2>
+      <button id="copyNoteBtn" class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-3 py-1.5 rounded-lg text-sm flex items-center gap-2"><i class="fas fa-copy text-xs"></i> কপি নোট</button>
+    </div>
+    <textarea id="globalNote" rows="4" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-indigo-400" placeholder="এখানে আপনার প্রয়োজনীয় নোট লিখুন... (স্বয়ংক্রিয়ভাবে সংরক্ষিত হবে)"></textarea>
+    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle text-[9px]"></i> নোটটি আপনার ব্রাউজারে সংরক্ষিত থাকে।</p>
+  </div>
+
+  <!-- রোডম্যাপ গ্রিড (৯ ফেজ) -->
+  <div id="phasesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-7"></div>
+
+  <div class="mt-12 text-center text-gray-500 dark:text-gray-400 text-sm border-t pt-6">
+    <span><i class="fas fa-info-circle text-red-500 text-[10px]"></i> লাল টেক্সট = অত্যন্ত গুরুত্বপূর্ণ | 📖 ব্যাখ্যা বাটনে ক্লিক করে টপিকের বিস্তারিত জানুন</span>
+  </div>
+</div>
+
+<!-- মোডাল -->
+<div id="modalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full mx-4 p-6 max-h-[80vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-4"><h3 id="modalTitle" class="text-xl font-bold dark:text-white"></h3><button id="closeModalBtn"><i class="fas fa-times text-2xl text-gray-400 hover:text-gray-600"></i></button></div>
+    <div id="modalBody"></div>
+    <div class="mt-5 flex justify-end"><button id="modalSaveBtn" class="bg-indigo-600 text-white px-5 py-2 rounded-xl">সংরক্ষণ</button></div>
+  </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+  // ======================= সব টপিকের বিস্তারিত ব্যাখ্যা (সংক্ষেপে) =======================
+  const detailedExplanations = {
+    // Phase 1
+    "Variables, Data Types": "int, float, str, bool, list, dict ইত্যাদি।",
+    "List, Dictionary": "ডাটা স্ট্রাকচারের মূল ভিত্তি।",
+    "if-else": "শর্ত অনুযায়ী প্রোগ্রাম প্রবাহ নিয়ন্ত্রণ।",
+    "Loop": "for, while – পুনরাবৃত্তি কাজ।",
+    "Function": "পুনরায় ব্যবহারযোগ্য কোড ব্লক।",
+    "File handling": "ফাইল খোলা, পড়া, লেখা।",
+    "List comprehension": "সংক্ষিপ্ত লিস্ট তৈরির পদ্ধতি।",
+    "Error handling (try-except)": "এরর ম্যানেজমেন্ট।",
+    "Basic OOP (class, object)": "ক্লাস ও অবজেক্ট – অবজেক্ট ওরিয়েন্টেড প্রোগ্রামিং।",
+    // Phase 2
+    "Django project structure": "প্রোজেক্ট ফোল্ডার, settings, urls, manage.py।",
+    "App, Models, Migrations": "অ্যাপ তৈরি, মডেল ডিফাইন, মাইগ্রেশন।",
+    "Admin": "Django অ্যাডমিন প্যানেল।",
+    "URL, Views": "URL ম্যাপিং ও ভিউ ফাংশন।",
+    "Templates": "HTML টেমপ্লেট রেন্ডারিং।",
+    "Django request lifecycle": "request → middleware → url → view → response → template।",
+    "Settings deep understanding": "সব কনফিগারেশন ফাইলের গভীর ধারণা।",
+    "Static & Media handling": "স্ট্যাটিক ফাইল (CSS/JS) ও মিডিয়া ফাইল (ইমেজ) হ্যান্ডলিং।",
+    // Phase 3
+    "DB design (normalization basic)": "ডাটাবেজ ডিজাইন ও নরমালাইজেশন।",
+    "Relationships (FK, M2M)": "ফরেনকি ও মেনি-টু-মেনি রিলেশনশিপ।",
+    "CRUD": "Create, Read, Update, Delete অপারেশন।",
+    "Indexing": "ইনডেক্সিং – কুয়েরি স্পিড বাড়ায়।",
+    "Raw SQL queries": "র‌ কুয়েরি লেখা (execute.raw())।",
+    "Explain query (performance check)": "কুয়েরি পারফরম্যান্স বিশ্লেষণ।",
+    "ORM vs SQL tradeoff": "ORM সুবিধা ও অসুবিধা।",
+    // Phase 4
+    "CRUD (Phase 4)": "ইতিমধ্যে শিখেছেন, প্র্যাকটিস করুন।",
+    "Forms": "Django Forms – ইনপুট ও ভ্যালিডেশন।",
+    "Authentication": "Login, Logout, Register।",
+    "QuerySet filtering": "filter(), exclude(), get() ইত্যাদি।",
+    "Class-Based Views (CBV)": "ListView, DetailView, CreateView ইত্যাদি।",
+    "Pagination": "পেজিনেশন – বড় ডাটা সেট ভাগ করা।",
+    "Custom user model": "AbstractUser বা AbstractBaseUser দিয়ে কাস্টম ইউজার।",
+    // Phase 5
+    "REST API": "REST আর্কিটেকচার।",
+    "Serializer": "DRF Serializer – মডেল থেকে JSON।",
+    "Views (DRF)": "APIView, ViewSet, ModelViewSet।",
+    "JWT Authentication": "JSON Web Token – স্টেটলেস অথেনটিকেশন।",
+    "Permissions (role-based)": "IsAuthenticated, IsAdminUser, কাস্টম পারমিশন।",
+    "API throttling (rate limit)": "এপিআই রেট লিমিট।",
+    "API documentation (Swagger/OpenAPI)": "সোয়াগার বা ডিআরএফ-ইয়াসগ ডকুমেন্টেশন।",
+    // Phase 6
+    ".env config": "পাইথন-ডিকপল দিয়ে এনভ ভেরিয়েবল ম্যানেজ।",
+    "Deployment": "রেলওয়ে, রেন্ডার বা ভিপিএসে ডেপ্লয়।",
+    "Logging system": "ডিজাঙ্গো লগিং – ডিবাগ ও মনিটরিং।",
+    "Error monitoring": "সেন্ট্রি বা রোলবার ব্যবহার।",
+    "Gunicorn + Nginx basic": "জুনিকর্ন এপ্লিকেশন সার্ভার, এনজিনএক্স রিভার্স প্রক্সি।",
+    "Docker basic → Docker": "ডকার কন্টেইনারে অ্যাপ প্যাকেজিং।",
+    // Phase 7
+    "Caching → Redis": "রেডিস ক্যাশ ব্যাকএন্ড।",
+    "Background jobs → Celery": "সেলারি দিয়ে ব্যাকগ্রাউন্ড টাস্ক।",
+    "Query optimization": "সিলেক্ট_রিলেটেড, প্রিফেচ_রিলেটেড গভীরে।",
+    "select_related vs prefetch_related deep": "কখন কোনটি ব্যবহার করবেন।",
+    "DB indexing strategy": "সঠিক জায়গায় ইনডেক্স তৈরি।",
+    "Load handling basic": "লোড ব্যালেন্সিং ও স্কেলিং প্রাথমিক ধারণা।",
+    // Phase 8
+    "Signals": "pre_save, post_save – ইভেন্ট ড্রিভেন কোড।",
+    "Middleware": "কাস্টম মিডলওয়্যার – রিকোয়েস্ট/রেসপন্স প্রসেসিং।",
+    "WebSocket (real-time)": "Django Channels – রিয়েল টাইম যোগাযোগ।",
+    "Microservices concept": "মাইক্রোসার্ভিস আর্কিটেকচার।",
+    "Monolith vs Microservice decision making": "কখন মনোলিথ, কখন মাইক্রোসার্ভিস।",
+    "Clean architecture": "ডিপেন্ডেন্সি ইনভার্সন, রিপোজিটরি প্যাটার্ন।",
+    // Phase 9
+    "CSRF": "ক্রস-সাইট রিকোয়েস্ট ফোর্জারি – Django-র built-in সুরক্ষা।",
+    "XSS": "ক্রস-সাইট স্ক্রিপ্টিং – টেমপ্লেট এস্কেপিং।",
+    "SQL Injection": "SQL ইনজেকশন প্রতিরোধ – ORM নিরাপদ।",
+    "Unit testing": "pytest বা Django TestCase।",
+    "API testing": "DRF APITestCase।",
+    "Authentication attack prevention": "ব্রুট ফোর্স, সেশন হাইজ্যাকিং প্রতিরোধ।",
+    "Input validation strategy": "সব ইনপুট ভ্যালিডেশন ও স্যানিটাইজেশন।",
+    // Practices (সব প্র্যাকটিসের জন্য সাধারণ ব্যাখ্যা)
+    "Calculator": "বেসিক ক্যালকুলেটর।",
+    "Student System": "ছাত্রদের রেজাল্ট ও তথ্য ব্যবস্থাপনা।",
+    "Blog App": "ব্লগ অ্যাপ (পোস্ট, কমেন্ট)।",
+    "Blog + Comment + Like + View count system": "এডভান্সড ব্লগ সিস্টেম।",
+    "Admin Dashboard": "অ্যাডমিন ড্যাশবোর্ড।",
+    "Full Blog API (Auth + Post + Comment)": "DRF দিয়ে ব্লগ এপিআই।",
+    "Production deployed API": "লাইভ এপিআই ডেপ্লয়।",
+    "Optimize a slow query project": "কুয়েরি অপটিমাইজেশন প্রোজেক্ট।",
+    "Custom middleware + signal project": "মিডলওয়্যার ও সিগন্যাল প্রোজেক্ট।",
+    "Real-time chat app": "ওয়েবসকেট চ্যাট অ্যাপ।",
+    "Testing suite for a Django app": "টেস্টিং প্রোজেক্ট।"
+  };
+  function getExplanation(title) { return detailedExplanations[title] || "📌 বিস্তারিত জানতে ডকুমেন্টেশন দেখুন।"; }
+
+  const importantTasksSet = new Set([
+    "List, Dictionary", "if-else", "Function", "Basic OOP (class, object)",
+    "Models, Migrations", "URL, Views", "Django request lifecycle", "Settings deep understanding",
+    "DB design (normalization basic)", "Relationships (FK, M2M)", "CRUD", "Indexing", "ORM vs SQL tradeoff",
+    "Authentication", "Class-Based Views (CBV)", "Custom user model",
+    "REST API", "Serializer", "JWT Authentication", "Permissions (role-based)",
+    "Deployment", "Docker basic → Docker", "Caching → Redis", "Background jobs → Celery",
+    "WebSocket (real-time)", "CSRF", "Unit testing"
+  ]);
+
+  // ৯ টি ফেজ ডাটা
+  const phasesData = [
+    { phase:1, title:"🐍 Python Core", icon:"fa-brands fa-python", bgGradient:"from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700",
+      topics:["Variables, Data Types","List, Dictionary","if-else","Loop","Function","File handling","List comprehension","Error handling (try-except)","Basic OOP (class, object)"],
+      practices:["Calculator","Student System"],
+      goal:"Problem solving + clean code" },
+    { phase:2, title:"⚙️ Django Core + Internals", icon:"fa-brands fa-django", bgGradient:"from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700",
+      topics:["Django project structure","App, Models, Migrations","Admin","URL, Views","Templates","Django request lifecycle","Settings deep understanding","Static & Media handling"],
+      practices:["Blog App"],
+      goal:"Django ভিতর থেকে বুঝা" },
+    { phase:3, title:"🟡 Database Mastery", icon:"fa-solid fa-database", bgGradient:"from-amber-50 to-orange-50 dark:from-gray-800 dark:to-gray-700",
+      topics:["DB design (normalization basic)","Relationships (FK, M2M)","CRUD","Indexing","Raw SQL queries","Explain query (performance check)","ORM vs SQL tradeoff"],
+      practices:["Blog + Comment + Like + View count system"],
+      goal:"Efficient & scalable database" },
+    { phase:4, title:"📊 Django Intermediate", icon:"fa-solid fa-chart-simple", bgGradient:"from-emerald-50 to-teal-50 dark:from-gray-800 dark:to-gray-700",
+      topics:["CRUD (Phase 4)","Forms","Authentication","QuerySet filtering","Class-Based Views (CBV)","Pagination","Custom user model"],
+      practices:["Admin Dashboard"],
+      goal:"Production-like structure" },
+    { phase:5, title:"🚀 API Development", icon:"fa-solid fa-cloud-arrow-up", bgGradient:"from-sky-50 to-blue-100 dark:from-gray-800 dark:to-gray-700",
+      topics:["REST API","Serializer","Views (DRF)","JWT Authentication","Permissions (role-based)","API throttling (rate limit)","API documentation (Swagger/OpenAPI)"],
+      practices:["Full Blog API (Auth + Post + Comment)"],
+      goal:"Client-ready API developer" },
+    { phase:6, title:"⚙️ Production Engineering", icon:"fa-solid fa-gear", bgGradient:"from-rose-50 to-red-100 dark:from-gray-800 dark:to-gray-700",
+      topics:[".env config","Deployment","Logging system","Error monitoring","Gunicorn + Nginx basic","Docker basic → Docker"],
+      practices:["Production deployed API"],
+      goal:"Real production system" },
+    { phase:7, title:"⚡ Performance + Scaling", icon:"fa-solid fa-gauge-high", bgGradient:"from-indigo-50 to-violet-100 dark:from-gray-800 dark:to-gray-700",
+      topics:["Caching → Redis","Background jobs → Celery","Query optimization","select_related vs prefetch_related deep","DB indexing strategy","Load handling basic"],
+      practices:["Optimize a slow query project"],
+      goal:"High performance apps" },
+    { phase:8, title:"🧠 Advanced Engineering", icon:"fa-solid fa-brain", bgGradient:"from-fuchsia-50 to-purple-100 dark:from-gray-800 dark:to-gray-700",
+      topics:["Signals","Middleware","WebSocket (real-time)","Microservices concept","Monolith vs Microservice decision making","Clean architecture"],
+      practices:["Custom middleware + signal project","Real-time chat app"],
+      goal:"Pro level architecture" },
+    { phase:9, title:"🔐 Security + Testing", icon:"fa-solid fa-shield-haltered", bgGradient:"from-slate-100 to-gray-300 dark:from-gray-800 dark:to-gray-700",
+      topics:["CSRF","XSS","SQL Injection","Unit testing","API testing","Authentication attack prevention","Input validation strategy"],
+      practices:["Testing suite for a Django app"],
+      goal:"Freelancing & enterprise ready" }
+  ];
+
+  // ---------- ট্র্যাকার ----------
+  class RoadmapTracker {
+    constructor(phasesData) {
+      this.phasesData = phasesData;
+      this.tasks = [];
+      this.storageKey = "ultimateDjangoRoadmap2026";
+      this.onUpdateCallbacks = [];
+      this.initTasks();
+      this.loadState();
+    }
+    initTasks() {
+      this.tasks = [];
+      this.phasesData.forEach((phase, pIdx) => {
+        phase.topics.forEach((topic, tIdx) => this.tasks.push({ id: `p${pIdx}_topic_${tIdx}`, phaseIdx: pIdx, title: topic, type:'topic', completed: false }));
+        phase.practices.forEach((practice, pIdx2) => this.tasks.push({ id: `p${pIdx}_practice_${pIdx2}`, phaseIdx: pIdx, title: practice, type:'practice', completed: false }));
+      });
+    }
+    loadState() {
+      try {
+        const saved = localStorage.getItem(this.storageKey);
+        if(saved) {
+          const completedIds = JSON.parse(saved);
+          this.tasks.forEach(t => { t.completed = completedIds.includes(t.id); });
+        }
+      } catch(e) { console.warn(e); }
+    }
+    saveState() {
+      const completedIds = this.tasks.filter(t=>t.completed).map(t=>t.id);
+      try { localStorage.setItem(this.storageKey, JSON.stringify(completedIds)); }
+      catch(e) { window.showToast?.("অগ্রগতি সংরক্ষণ ব্যর্থ! স্থান সীমিত।"); }
+    }
+    toggleTask(taskId) {
+      const task = this.tasks.find(t=>t.id===taskId);
+      if(task) { task.completed = !task.completed; this.saveState(); this.triggerUpdate(); return true; }
+      return false;
+    }
+    getTasksForPhase(phaseIdx) { return this.tasks.filter(t=>t.phaseIdx===phaseIdx); }
+    getPhaseStats(phaseIdx) {
+      const phaseTasks = this.getTasksForPhase(phaseIdx);
+      const total = phaseTasks.length, completed = phaseTasks.filter(t=>t.completed).length;
+      const percent = total===0?0:Math.round((completed/total)*100);
+      return {completed,total,percent};
+    }
+    getOverallStats() {
+      const total = this.tasks.length, completed = this.tasks.filter(t=>t.completed).length;
+      const percent = total===0?0:Math.round((completed/total)*100);
+      return {completed,total,percent};
+    }
+    setPhaseAllTasks(phaseIdx, completedStatus) {
+      let changed = false;
+      this.getTasksForPhase(phaseIdx).forEach(task=>{ if(task.completed !== completedStatus) { task.completed = completedStatus; changed = true; } });
+      if(changed) { this.saveState(); this.triggerUpdate(); }
+    }
+    resetAll() { this.tasks.forEach(t=>t.completed=false); this.saveState(); this.triggerUpdate(); }
+    onUpdate(cb) { this.onUpdateCallbacks.push(cb); }
+    triggerUpdate() { this.onUpdateCallbacks.forEach(cb=>cb()); }
+  }
+
+  // ---------- মোডাল ম্যানেজার ----------
+  class NotesExplManager {
+    constructor() {
+      this.currentTaskId = null; this.currentMode = null;
+      this.modal = document.getElementById('modalOverlay');
+      this.modalTitle = document.getElementById('modalTitle');
+      this.modalBody = document.getElementById('modalBody');
+      this.saveBtn = document.getElementById('modalSaveBtn');
+      this.closeBtn = document.getElementById('closeModalBtn');
+      this.attachEvents();
+    }
+    attachEvents() {
+      this.closeBtn.onclick = () => this.hideModal();
+      this.modal.onclick = (e) => { if(e.target === this.modal) this.hideModal(); };
+      this.saveBtn.onclick = () => this.saveNote();
+    }
+    showNotes(taskId, taskTitle) {
+      this.currentTaskId = taskId; this.currentMode = 'notes';
+      this.modalTitle.innerHTML = `<i class="fas fa-pen-alt text-sm"></i> নোট: ${this.escapeHtml(taskTitle)}`;
+      const savedNote = localStorage.getItem(`taskNote_${taskId}`) || '';
+      this.modalBody.innerHTML = `<textarea id="noteTextarea" class="w-full h-40 border rounded-xl p-3 dark:bg-gray-700 dark:border-gray-600">${this.escapeHtml(savedNote)}</textarea><p class="text-xs text-gray-500 mt-2">আপনার ব্যক্তিগত নোট লিখুন (অটো সেভ হবে)</p>`;
+      this.showModal();
+      this.saveBtn.style.display = 'block';
+    }
+    showExplanation(taskId, taskTitle) {
+      this.currentTaskId = taskId; this.currentMode = 'explanation';
+      this.modalTitle.innerHTML = `<i class="fas fa-book-open text-indigo-500 text-sm"></i> বিস্তারিত ব্যাখ্যা: ${this.escapeHtml(taskTitle)}`;
+      const explanation = getExplanation(taskTitle);
+      this.modalBody.innerHTML = `<div class="max-w-none whitespace-pre-wrap text-gray-700 dark:text-gray-300 text-sm leading-relaxed">${this.markdownToHtml(explanation)}</div><hr class="my-3"><p class="text-xs text-gray-500">💡 শেখার গাইড হিসাবে ব্যবহার করুন।</p>`;
+      this.showModal();
+      this.saveBtn.style.display = 'none';
+    }
+    saveNote() {
+      if(this.currentMode === 'notes') {
+        const note = document.getElementById('noteTextarea')?.value || '';
+        localStorage.setItem(`taskNote_${this.currentTaskId}`, note);
+        window.showToast?.("নোট সংরক্ষিত");
+      }
+      this.hideModal();
+    }
+    showModal() { this.modal.classList.remove('hidden'); this.modal.classList.add('flex'); }
+    hideModal() { this.modal.classList.add('hidden'); this.modal.classList.remove('flex'); this.currentTaskId = null; this.saveBtn.style.display = 'block'; }
+    escapeHtml(str) { return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    markdownToHtml(md) { return md.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/🔹/g, '•').replace(/💡/g, '💡').replace(/🎯/g, '🎯').replace(/\n/g, '<br>'); }
+  }
+
+  // ---------- UI রেন্ডারার (ইভেন্ট ডেলিগেশন) ----------
+  class RoadmapUIRenderer {
+    constructor(tracker, phasesRaw) {
+      this.tracker = tracker;
+      this.phasesRaw = phasesRaw;
+      this.container = document.getElementById('phasesGrid');
+      this.overallPercentSpan = document.getElementById('overallPercentDisplay');
+      this.overallProgressFill = document.getElementById('overallProgressBar');
+      this.completedTasksSpan = document.getElementById('completedTasksCount');
+      this.totalTasksSpan = document.getElementById('totalTasksCount');
+      this.resetBtn = document.getElementById('resetAllBtn');
+      this.notesExplManager = new NotesExplManager();
+      this.init();
+    }
+    escapeHtml(str) { return String(str).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    
+    render() {
+      let html = '';
+      for(let idx=0; idx<this.phasesRaw.length; idx++) {
+        const phase=this.phasesRaw[idx]; const phaseIdx=idx;
+        const stats=this.tracker.getPhaseStats(phaseIdx);
+        const phaseTasks=this.tracker.getTasksForPhase(phaseIdx);
+        let topicsHtml='', practicesHtml='';
+        phaseTasks.filter(t=>t.type==='topic').forEach(task=>{
+          const isImportant = importantTasksSet.has(task.title);
+          const explanation = getExplanation(task.title);
+          const escapedTooltip = this.escapeHtml(explanation);
+          const checked=task.completed?'checked':'';
+          topicsHtml+=`<div class="flex items-center justify-between group p-1 rounded-lg hover:bg-white/40" data-task-id="${task.id}">
+            <label class="flex items-center gap-2 flex-1 cursor-pointer"><input type="checkbox" class="task-checkbox w-3.5 h-3.5 rounded" ${checked}><span class="text-sm ${isImportant ? 'task-important font-semibold' : 'text-gray-700 dark:text-gray-300'} ${task.completed?'line-through text-gray-400':''}" data-tooltip="${escapedTooltip}">${this.escapeHtml(task.title)} <i class="fas fa-info-circle tooltip-icon"></i></span></label>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100"><button data-action="notes" class="task-action-btn text-indigo-400 hover:text-indigo-600" title="নোট"><i class="fas fa-pen-alt action-icon"></i></button><button data-action="explanation" class="task-action-btn text-emerald-500 hover:text-emerald-700" title="ব্যাখ্যা"><i class="fas fa-book-open action-icon"></i></button></div>
+          </div>`;
+        });
+        phaseTasks.filter(t=>t.type==='practice').forEach(task=>{
+          const checked=task.completed?'checked':'';
+          practicesHtml+=`<div class="flex items-center justify-between group p-1 rounded-lg hover:bg-white/40" data-task-id="${task.id}">
+            <label class="flex items-center gap-2 flex-1 cursor-pointer"><input type="checkbox" class="task-checkbox w-3.5 h-3.5 rounded" ${checked}><span class="text-sm text-gray-700 dark:text-gray-300 ${task.completed?'line-through text-gray-400':''}">${this.escapeHtml(task.title)}</span></label>
+            <div class="flex gap-1 opacity-0 group-hover:opacity-100"><button data-action="notes" class="task-action-btn text-indigo-400 hover:text-indigo-600" title="নোট"><i class="fas fa-pen-alt action-icon"></i></button><button data-action="explanation" class="task-action-btn text-emerald-500 hover:text-emerald-700" title="ব্যাখ্যা"><i class="fas fa-book-open action-icon"></i></button></div>
+          </div>`;
+        });
+        html+=`<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/40 overflow-hidden" data-phase-idx="${phaseIdx}">
+          <div class="bg-gradient-to-r ${phase.bgGradient} px-5 py-4 flex justify-between flex-wrap gap-2">
+            <div class="flex gap-3 items-center"><i class="${phase.icon} text-indigo-600 phase-icon"></i><h2 class="text-xl font-bold text-gray-800 dark:text-white">Phase ${phase.phase}: ${phase.title}</h2></div>
+            <div class="flex gap-2"><span class="phase-stats text-xs font-semibold bg-white/70 rounded-full px-2 py-1">${stats.completed}/${stats.total}</span>
+              <button data-phase="${phaseIdx}" data-action="select-all" class="phase-select-all text-xs bg-white/70 hover:bg-green-100 px-3 py-1 rounded-full">সব নির্বাচন</button>
+              <button data-phase="${phaseIdx}" data-action="deselect-all" class="phase-deselect-all text-xs bg-white/70 hover:bg-red-100 px-3 py-1 rounded-full">সব বাতিল</button>
+            </div>
+          </div>
+          <div class="p-5 space-y-4">
+            <div><h3 class="font-semibold text-indigo-800 dark:text-indigo-300 text-sm">📖 টপিকসমূহ</h3><div class="space-y-1">${topicsHtml}</div></div>
+            <div><h3 class="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">🎯 প্র্যাকটিস</h3><div class="space-y-1">${practicesHtml}</div></div>
+            <div class="flex text-sm pt-2 border-t"><i class="fas fa-flag-checkered text-amber-500 mt-0.5 mr-2 text-xs"></i><span class="font-medium">লক্ষ্য:</span><span class="ml-1 text-gray-600 dark:text-gray-400">${this.escapeHtml(phase.goal)}</span></div>
+            <div><div class="flex justify-between text-xs text-gray-500 mb-1"><span>ফেজের অগ্রগতি</span><span class="phase-percent">${stats.percent}%</span></div><div class="w-full bg-gray-200 rounded-full h-2"><div class="phase-progress-bar bg-indigo-500 h-2 rounded-full" style="width:${stats.percent}%"></div></div></div>
+          </div>
+        </div>`;
+      }
+      this.container.innerHTML = html;
+      this.updateOverallStatsUI();
+      this.setupEventDelegation();
+    }
+    
+    setupEventDelegation() {
+      this.container.removeEventListener('change', this.handleCheckboxChange);
+      this.container.removeEventListener('click', this.handleButtonClick);
+      this.handleCheckboxChange = (e) => {
+        const cb = e.target;
+        if(cb.classList && cb.classList.contains('task-checkbox')) {
+          const parentDiv = cb.closest('[data-task-id]');
+          if(parentDiv) {
+            const taskId = parentDiv.getAttribute('data-task-id');
+            if(taskId) {
+              this.tracker.toggleTask(taskId);
+              this.updateTaskUI(taskId, cb.checked);
+              this.updateOverallStatsUI();
+            }
+          }
+        }
+      };
+      this.handleButtonClick = (e) => {
+        const btn = e.target.closest('button');
+        if(!btn) return;
+        if(btn.classList.contains('task-action-btn')) {
+          e.stopPropagation();
+          const parentDiv = btn.closest('[data-task-id]');
+          if(parentDiv) {
+            const taskId = parentDiv.getAttribute('data-task-id');
+            const action = btn.getAttribute('data-action');
+            const task = this.tracker.tasks.find(t => t.id === taskId);
+            if(task) {
+              if(action === 'notes') this.notesExplManager.showNotes(taskId, task.title);
+              else if(action === 'explanation') this.notesExplManager.showExplanation(taskId, task.title);
+            }
+          }
+        }
+        if(btn.classList.contains('phase-select-all')) {
+          const phaseIdx = parseInt(btn.getAttribute('data-phase'),10);
+          this.tracker.setPhaseAllTasks(phaseIdx, true);
+          this.rerenderPhase(phaseIdx);
+          this.updateOverallStatsUI();
+        }
+        if(btn.classList.contains('phase-deselect-all')) {
+          const phaseIdx = parseInt(btn.getAttribute('data-phase'),10);
+          this.tracker.setPhaseAllTasks(phaseIdx, false);
+          this.rerenderPhase(phaseIdx);
+          this.updateOverallStatsUI();
+        }
+      };
+      this.container.addEventListener('change', this.handleCheckboxChange);
+      this.container.addEventListener('click', this.handleButtonClick);
+    }
+    
+    updateTaskUI(taskId, isChecked) {
+      const parentDiv = this.container.querySelector(`[data-task-id="${taskId}"]`);
+      if(parentDiv) {
+        const cb = parentDiv.querySelector('.task-checkbox');
+        if(cb) cb.checked = isChecked;
+        const span = parentDiv.querySelector('span:first-of-type');
+        if(span) {
+          if(isChecked) span.classList.add('line-through', 'text-gray-400');
+          else span.classList.remove('line-through', 'text-gray-400');
+        }
+      }
+      const phaseDiv = parentDiv?.closest('[data-phase-idx]');
+      if(phaseDiv) {
+        const phaseIdx = parseInt(phaseDiv.getAttribute('data-phase-idx'),10);
+        const stats = this.tracker.getPhaseStats(phaseIdx);
+        const statsSpan = phaseDiv.querySelector('.phase-stats');
+        if(statsSpan) statsSpan.innerText = `${stats.completed}/${stats.total}`;
+        const percentSpan = phaseDiv.querySelector('.phase-percent');
+        if(percentSpan) percentSpan.innerText = `${stats.percent}%`;
+        const progressBar = phaseDiv.querySelector('.phase-progress-bar');
+        if(progressBar) progressBar.style.width = `${stats.percent}%`;
+      }
+    }
+    
+    rerenderPhase(phaseIdx) {
+      const phase = this.phasesRaw[phaseIdx];
+      const stats = this.tracker.getPhaseStats(phaseIdx);
+      const phaseTasks = this.tracker.getTasksForPhase(phaseIdx);
+      let topicsHtml='', practicesHtml='';
+      phaseTasks.filter(t=>t.type==='topic').forEach(task=>{
+        const isImportant = importantTasksSet.has(task.title);
+        const explanation = getExplanation(task.title);
+        const escapedTooltip = this.escapeHtml(explanation);
+        const checked=task.completed?'checked':'';
+        topicsHtml+=`<div class="flex items-center justify-between group p-1 rounded-lg hover:bg-white/40" data-task-id="${task.id}"><label class="flex items-center gap-2 flex-1 cursor-pointer"><input type="checkbox" class="task-checkbox w-3.5 h-3.5 rounded" ${checked}><span class="text-sm ${isImportant ? 'task-important font-semibold' : 'text-gray-700 dark:text-gray-300'} ${task.completed?'line-through text-gray-400':''}" data-tooltip="${escapedTooltip}">${this.escapeHtml(task.title)} <i class="fas fa-info-circle tooltip-icon"></i></span></label><div class="flex gap-1 opacity-0 group-hover:opacity-100"><button data-action="notes" class="task-action-btn text-indigo-400 hover:text-indigo-600"><i class="fas fa-pen-alt action-icon"></i></button><button data-action="explanation" class="task-action-btn text-emerald-500 hover:text-emerald-700"><i class="fas fa-book-open action-icon"></i></button></div></div>`;
+      });
+      phaseTasks.filter(t=>t.type==='practice').forEach(task=>{
+        const checked=task.completed?'checked':'';
+        practicesHtml+=`<div class="flex items-center justify-between group p-1 rounded-lg hover:bg-white/40" data-task-id="${task.id}"><label class="flex items-center gap-2 flex-1 cursor-pointer"><input type="checkbox" class="task-checkbox w-3.5 h-3.5 rounded" ${checked}><span class="text-sm text-gray-700 dark:text-gray-300 ${task.completed?'line-through text-gray-400':''}">${this.escapeHtml(task.title)}</span></label><div class="flex gap-1 opacity-0 group-hover:opacity-100"><button data-action="notes" class="task-action-btn text-indigo-400 hover:text-indigo-600"><i class="fas fa-pen-alt action-icon"></i></button><button data-action="explanation" class="task-action-btn text-emerald-500 hover:text-emerald-700"><i class="fas fa-book-open action-icon"></i></button></div></div>`;
+      });
+      const newPhaseHtml = `<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/40 overflow-hidden" data-phase-idx="${phaseIdx}">
+        <div class="bg-gradient-to-r ${phase.bgGradient} px-5 py-4 flex justify-between flex-wrap gap-2">
+          <div class="flex gap-3 items-center"><i class="${phase.icon} text-indigo-600 phase-icon"></i><h2 class="text-xl font-bold text-gray-800 dark:text-white">Phase ${phase.phase}: ${phase.title}</h2></div>
+          <div class="flex gap-2"><span class="phase-stats text-xs font-semibold bg-white/70 rounded-full px-2 py-1">${stats.completed}/${stats.total}</span>
+            <button data-phase="${phaseIdx}" data-action="select-all" class="phase-select-all text-xs bg-white/70 hover:bg-green-100 px-3 py-1 rounded-full">সব নির্বাচন</button>
+            <button data-phase="${phaseIdx}" data-action="deselect-all" class="phase-deselect-all text-xs bg-white/70 hover:bg-red-100 px-3 py-1 rounded-full">সব বাতিল</button>
+          </div>
+        </div>
+        <div class="p-5 space-y-4">
+          <div><h3 class="font-semibold text-indigo-800 dark:text-indigo-300 text-sm">📖 টপিকসমূহ</h3><div class="space-y-1">${topicsHtml}</div></div>
+          <div><h3 class="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">🎯 প্র্যাকটিস</h3><div class="space-y-1">${practicesHtml}</div></div>
+          <div class="flex text-sm pt-2 border-t"><i class="fas fa-flag-checkered text-amber-500 mt-0.5 mr-2 text-xs"></i><span class="font-medium">লক্ষ্য:</span><span class="ml-1 text-gray-600 dark:text-gray-400">${this.escapeHtml(phase.goal)}</span></div>
+          <div><div class="flex justify-between text-xs text-gray-500 mb-1"><span>ফেজের অগ্রগতি</span><span class="phase-percent">${stats.percent}%</span></div><div class="w-full bg-gray-200 rounded-full h-2"><div class="phase-progress-bar bg-indigo-500 h-2 rounded-full" style="width:${stats.percent}%"></div></div></div>
+        </div>
+      </div>`;
+      const oldDiv = this.container.querySelector(`[data-phase-idx="${phaseIdx}"]`);
+      if(oldDiv) oldDiv.outerHTML = newPhaseHtml;
+    }
+    
+    updateOverallStatsUI() {
+      const {completed,total,percent}=this.tracker.getOverallStats();
+      this.overallPercentSpan.innerText=`${percent}%`;
+      this.overallProgressFill.style.width=`${percent}%`;
+      this.completedTasksSpan.innerText=completed;
+      this.totalTasksSpan.innerText=total;
+    }
+    
+    resetAllWithScroll() {
+      const scrollY = window.scrollY;
+      this.tracker.resetAll();
+      this.render();
+      window.scrollTo({ top: scrollY, behavior: 'auto' });
+    }
+    
+    bindGlobalReset() {
+      this.resetBtn.onclick = () => {
+        if(confirm('সব অগ্রগতি রিসেট হবে। নিশ্চিত?')) this.resetAllWithScroll();
+      };
+    }
+    
+    init() {
+      this.render();
+      this.bindGlobalReset();
+      this.tracker.onUpdate(() => {
+        this.updateOverallStatsUI();
+      });
+    }
+  }
+
+  // টোস্ট ফাংশন
+  function showToast(message, duration=2000) {
+    const toast = document.getElementById('toastMsg');
+    if(!toast) return;
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    setTimeout(() => { toast.style.opacity = '0'; }, duration);
+  }
+  window.showToast = showToast;
+
+  // গ্লোবাল নোট
+  function initGlobalNote() {
+    const noteTextarea = document.getElementById('globalNote');
+    const copyBtn = document.getElementById('copyNoteBtn');
+    const savedNote = localStorage.getItem('global_django_note') || '';
+    noteTextarea.value = savedNote;
+    noteTextarea.addEventListener('input', () => localStorage.setItem('global_django_note', noteTextarea.value));
+    copyBtn.addEventListener('click', async () => {
+      if (!noteTextarea.value.trim()) return showToast('নোট খালি!');
+      try { await navigator.clipboard.writeText(noteTextarea.value); showToast('✅ নোট কপি হয়েছে'); } catch(err) { showToast('কপি ব্যর্থ'); }
+    });
+  }
+
+  // ডার্ক মোড
+  function initDarkMode() {
+    const toggle = document.getElementById('darkModeToggle');
+    const icon = document.getElementById('darkIcon');
+    const text = document.getElementById('darkText');
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if(isDark) { document.documentElement.classList.add('dark'); icon.className='fas fa-sun text-xs'; text.innerText='লাইট মোড'; }
+    else { document.documentElement.classList.remove('dark'); icon.className='fas fa-moon text-xs'; text.innerText='ডার্ক মোড'; }
+    toggle.onclick = () => {
+      const now = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('darkMode', now);
+      icon.className = now ? 'fas fa-sun text-xs' : 'fas fa-moon text-xs';
+      text.innerText = now ? 'লাইট মোড' : 'ডার্ক মোড';
+    };
+  }
+
+  // শেয়ারিং
+  async function shareAsImage() {
+    try {
+      const el = document.getElementById('fullRoadmapContainer');
+      const canvas = await html2canvas(el, { scale: 3, backgroundColor: '#f3f4f6' });
+      const link = document.createElement('a');
+      link.download = 'django_roadmap.png';
+      link.href = canvas.toDataURL();
+      link.click();
+      showToast('ইমেজ সেভ হয়েছে');
+    } catch(e) { showToast('ইমেজ তৈরি ব্যর্থ'); }
+  }
+  async function shareAsPDF() {
+    try {
+      const el = document.getElementById('fullRoadmapContainer');
+      const canvas = await html2canvas(el, { scale: 3, backgroundColor: '#f3f4f6' });
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= (pdf.internal.pageSize.getHeight());
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= (pdf.internal.pageSize.getHeight());
+      }
+      pdf.save('django_roadmap.pdf');
+      showToast('PDF তৈরি হয়েছে');
+    } catch(e) { showToast('PDF তৈরি ব্যর্থ'); }
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const tracker = new RoadmapTracker(phasesData);
+    const ui = new RoadmapUIRenderer(tracker, phasesData);
+    window.uiRenderer = ui;
+    initDarkMode();
+    initGlobalNote();
+    document.getElementById('sharePNG').addEventListener('click', shareAsImage);
+    document.getElementById('sharePDF').addEventListener('click', shareAsPDF);
+  });
+</script>
+</body>
+</html>
